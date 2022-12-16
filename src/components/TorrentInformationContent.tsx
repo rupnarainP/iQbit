@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 import { TorrTorrentInfo } from "../types";
 import {
   Box,
@@ -67,6 +67,9 @@ const TorrentInformationContent = ({
     <>
       <IosGridBox mb={3} title={"Torrent Name"}>
         <Heading wordBreak={"break-all"}>{torrentData.name}</Heading>
+      </IosGridBox>
+      <IosGridBox mb={3} title={"Download Path"}>
+        <Heading wordBreak={"break-all"}>{torrentData.save_path}</Heading>
       </IosGridBox>
       <SimpleGrid columns={4} templateRows={"auto"} gap={defaultGap}>
         <IosGridBox
