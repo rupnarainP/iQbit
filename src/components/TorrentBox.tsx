@@ -25,6 +25,8 @@ import { TorrCategory, TorrTorrentInfo } from "../types";
 import stateDictionary from "../utils/StateDictionary";
 import filesize from "filesize";
 import {
+  IoAlarm,
+  IoAlert,
   IoArrowDown,
   IoCalendar,
   IoCloudUpload,
@@ -83,7 +85,7 @@ const TorrentBox = ({
   const timeString = torrentData.eta ? CreateETAString(date) : "";
 
   const [waiting, setWaiting] = useState<
-    "" | "mainBtn" | "category" | "name"
+    "" | "mainBtn" | "category" | "name" | "priority"
   >();
 
   useEffect(() => {
@@ -137,6 +139,26 @@ const TorrentBox = ({
       onMutate: () => setWaiting("name"),
       onError: () => setWaiting(""),
       onSuccess: () => renameTorrentDisclosure.onClose(),
+    }
+  );
+
+  const { mutate: increasePriority, isLoading: increasePriorityLoading } = useMutation(
+    "increasePriority",
+    () => TorrClient.increasePriority(hash),
+    {
+      onMutate: () => setWaiting("priority"),
+      onError: () => setWaiting(""),
+      onSuccess: () => actionSheetDisclosure.onClose(),
+    }
+  );
+
+  const { mutate: decreasePriority, isLoading: decreasePriorityLoading } = useMutation(
+    "increasePriority",
+    () => TorrClient.decreasePriority(hash),
+    {
+      onMutate: () => setWaiting(""),
+      onError: () => setWaiting(""),
+      onSuccess: () => actionSheetDisclosure.onClose(),
     }
   );
 
@@ -255,6 +277,11 @@ const TorrentBox = ({
             icon={<IoPricetags />}
             label={torrentData.category || "–"}
           />
+          <StatWithIcon
+            loading={waiting === "priority"}
+            icon={<IoAlert />}
+            label={torrentData.priority || "–"}
+          />
         </HStack>
         <Flex mt={5} mb={2} justifyContent={"space-between"} alignItems={"end"}>
           <HStack alignItems={"end"}>
@@ -347,6 +374,14 @@ const TorrentBox = ({
                 {
                   label: "Rename Torrent",
                   onClick: () => renameTorrentDisclosure.onOpen(),
+                },
+                {
+                  label: "Decrease Priority",
+                  onClick: () => decreasePriority(),
+                },
+                {
+                  label: "Increase Priority",
+                  onClick: () => increasePriority(),
                 },
                 {
                   label: "Torrent Information",

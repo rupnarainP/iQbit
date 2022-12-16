@@ -124,10 +124,12 @@ export const TorrClient = {
   addTorrent: async (
     uploadType: "urls" | "torrents",
     file: string | File,
-    category = ""
+    category = "",
+    savePath: string = ""
   ) => {
     const formData = new FormData();
     formData.append("category", category);
+    formData.append("savepath", savePath);
     formData.append(uploadType, file);
     const { data } = await APICall.post("torrents/add", formData, {
       headers: {
@@ -160,6 +162,22 @@ export const TorrClient = {
       params: {
         category: name,
         savePath: path,
+      },
+    });
+  },
+
+  increasePriority: async (hash: string) => {
+    return await APICall.get("torrents/increasePrio", {
+      params: {
+        hashes: hash
+      },
+    });
+  },
+
+  decreasePriority: async (hash: string) => {
+    return await APICall.get("torrents/decreasePrio", {
+      params: {
+        hashes: hash
       },
     });
   },
