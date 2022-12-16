@@ -89,6 +89,7 @@ const Home = () => {
   const addModalDisclosure = useDisclosure();
   const [textArea, setTextArea] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [downloadPath, setDownloadPath] = useState("");
   const [fileError, setFileError] = useState("");
   const [file, setFile] = useState<File>();
   const [draggingOver, setDraggingOver] = useState(false);
@@ -110,7 +111,8 @@ const Home = () => {
         TorrClient.addTorrent(
           !!textArea ? "urls" : "torrents",
           !!textArea ? textArea : file!,
-          selectedCategory
+          selectedCategory,
+            downloadPath
         ),
       { onSuccess: addModalDisclosure.onClose }
     );
@@ -121,6 +123,10 @@ const Home = () => {
   const [filterSearch, setFilterSearch] = useLocalStorage(
     "home-filter-search",
     ""
+  );
+  const [sortBy, setSortBy] = useLocalStorage(
+    "home-sort",
+    "Name Asc"
   );
   const [filterCategory, setFilterCategory] = useLocalStorage(
     "home-filter-category",
@@ -150,7 +156,9 @@ const Home = () => {
 
   const Torrents = useMemo(() => {
     return Object.entries(torrentsTx)
-      ?.sort((a, b) => b[1]?.added_on - a[1]?.added_on)
+      // ?.sort((a, b) => b[1]?.added_on - a[1]?.added_on)
+      ?.sort((a, b) => 
+      sortBy === "Name Asc" ? (b[1]?.name > a[1]?.name ? -1 : 1) : (b[1]?.added_on - a[1]?.added_on)) 
       ?.filter(([hash]) => !removedTorrs.includes(hash))
       ?.filter(([hash, torr]) =>
         filterCategory !== "Show All" ? torr.category === filterCategory : true
@@ -170,6 +178,7 @@ const Home = () => {
 
   const fontSizeContext = useFontSizeContext();
 
+  // @ts-ignore
   return (
     <WindowScroller>
       {({ isScrolling, scrollTop, width, height }) => (
@@ -278,6 +287,15 @@ const Home = () => {
                   </Select>
                 </FormControl>
               )}
+              {<FormControl>
+                <FormLabel>{"Download Path"}</FormLabel>
+                <Input
+                    _disabled={{ bgColor: "gray.50" }}
+                    value={downloadPath}
+                    onChange={(e) => setDownloadPath(e.target.value)}
+                />
+              </FormControl>
+              }
             </VStack>
             <LightMode>
               <Button
@@ -326,6 +344,16 @@ const Home = () => {
                     value={filterSearch}
                     onChange={(e) => setFilterSearch(e.target.value)}
                   />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Sort</FormLabel>
+                  <Select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                  >
+                    <option>Name Asc</option>
+                    <option>Date Added Desc</option>
+                  </Select>
                 </FormControl>
                 <FormControl>
                   <FormLabel>Category</FormLabel>
