@@ -1,16 +1,18 @@
-import React, { PropsWithChildren } from "react";
+import React, {PropsWithChildren, useMemo, useState} from "react";
 import {
   Box,
   Button,
-  Flex,
+  Flex, FormControl, FormLabel,
   Heading,
   LightMode,
+  Select,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useIsLargeScreen } from "../utils/screenSize";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { TorrClient } from "../utils/TorrClient";
 import { IoCheckmark } from "react-icons/io5";
+import {Input} from "@chakra-ui/input";
 
 export interface TorrentDownloadBoxProps {
   title?: string;
@@ -24,11 +26,25 @@ const TorrentDownloadBox = ({
   onSelect,
   children,
 }: PropsWithChildren<TorrentDownloadBoxProps>) => {
+
+  const { data: categories } = useQuery(
+    "torrentsCategory",
+    TorrClient.getCategories
+  );
+  
+  const Categories = useMemo(() => {
+    return Object.values(categories || {}).map((c) => ({
+      label: c.name,
+      value: c.name,
+    }));
+  }, [categories]);
+
+
   const isLarge = useIsLargeScreen();
 
   const { mutate, isLoading, isSuccess } = useMutation(
     "addBox",
-    (magnetURLParam: string) => TorrClient.addTorrent("urls", magnetURLParam)
+    (magnetURLParam: string) => TorrClient.addTorrent("urls", magnetURLParam, selectedCategory, downloadPath)
   );
 
   const {
@@ -40,6 +56,8 @@ const TorrentDownloadBox = ({
   });
 
   const bgColor = useColorModeValue("grayAlpha.200", "grayAlpha.400");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [downloadPath, setDownloadPath] = useState("");
 
   return (
     <Flex
@@ -59,8 +77,31 @@ const TorrentDownloadBox = ({
           </Heading>
         )}
         {children}
+
+        {Categories.length && (
+                <FormControl>
+                  <FormLabel>{"Category"}</FormLabel>
+                  <Select
+                    placeholder="Select category"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    {Categories.map((c) => (
+                      <option key={c.label}>{c.label}</option>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+
+        <FormLabel>{"Download Path"}</FormLabel>
+          <Input
+              _disabled={{ bgColor: "gray.50" }}
+              value={downloadPath}
+              onChange={(e) => setDownloadPath(e.target.value)}
+          />
       </Box>
       <LightMode>
+
         <Button
           minW={32}
           disabled={
