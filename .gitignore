@@ -25,3 +25,5 @@ yarn-error.log*
 /server/.env
 /server/node_modules
 /release
+package-lock.json
+yarn.lock

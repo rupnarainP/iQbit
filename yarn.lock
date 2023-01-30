@@ -2544,7 +2544,7 @@
 
 "@types/fuzzyset.js@^0.0.2":
   version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@types/fuzzyset.js/-/fuzzyset.js-0.0.2.tgz#5aab6eaebc50445c5752e6603d1724b834fe2f07"
+  resolved "https://registry.npmjs.org/@types/fuzzyset.js/-/fuzzyset.js-0.0.2.tgz"
   integrity sha512-gNHcafWmEGjAULHs5br9XIQFiS8IzWeL8911al3aKV4fcFzyK52XHKmHHWbS+Xoixs3EsMyWb4z/hRai1QHK8w==
 
 "@types/graceful-fs@^4.1.2":
@@ -2662,32 +2662,32 @@
 
 "@types/react-dom@18.0.6":
   version "18.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.6.tgz#36652900024842b74607a17786b6662dd1e103a1"
+  resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.6.tgz"
   integrity sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==
   dependencies:
     "@types/react" "*"
 
 "@types/react-virtualized@^9.21.21":
   version "9.21.21"
-  resolved "https://registry.yarnpkg.com/@types/react-virtualized/-/react-virtualized-9.21.21.tgz#65c96f25314f0fb3d40536929dc78112753b49e1"
+  resolved "https://registry.npmjs.org/@types/react-virtualized/-/react-virtualized-9.21.21.tgz"
   integrity sha512-Exx6I7p4Qn+BBA1SRyj/UwQlZ0I0Pq7g7uhAp0QQ4JWzZunqEqNBGTmCmMmS/3N9wFgAGWuBD16ap7k8Y14VPA==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "^17"
 
-"@types/react@*", "@types/react@18.0.7", "@types/react@^17":
-  version "18.0.7"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.7.tgz#8437a226763adf854969954dfe582529a406cbad"
-  integrity sha512-CXSXHzTexlX9esf4ReIUJeaemKcmBEvYzxHDUk19c3BCcEGUvUjkeC3jkscPSfSaQ6SPDRNd/zMxi8oc/P1zxA==
+"@types/react@*", "@types/react@18.0.15", "@types/react@^17":
+  version "18.0.15"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.0.15.tgz"
+  integrity sha512-iz3BtLuIYH1uWdsv6wXYdhozhqj20oD4/Hk2DNXIn1kFsmp9x8d9QB6FnPhfkbhd2PgEONt9Q1x/ebkwjfFLow==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@18.0.15":
-  version "18.0.15"
-  resolved "https://registry.npmjs.org/@types/react/-/react-18.0.15.tgz"
-  integrity sha512-iz3BtLuIYH1uWdsv6wXYdhozhqj20oD4/Hk2DNXIn1kFsmp9x8d9QB6FnPhfkbhd2PgEONt9Q1x/ebkwjfFLow==
+"@types/react@^18.0.15":
+  version "18.0.27"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.27.tgz#d9425abe187a00f8a5ec182b010d4fd9da703b71"
+  integrity sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3743,7 +3743,7 @@ cliui@^7.0.2:
 
 clsx@^1.0.4:
   version "1.2.1"
-  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  resolved "https://registry.npmjs.org/clsx/-/clsx-1.2.1.tgz"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
 co@^4.6.0:
@@ -4365,7 +4365,7 @@ dom-converter@^0.2.0:
 
 dom-helpers@^5.1.3:
   version "5.2.1"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902"
+  resolved "https://registry.npmjs.org/dom-helpers/-/dom-helpers-5.2.1.tgz"
   integrity sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
   dependencies:
     "@babel/runtime" "^7.8.7"
@@ -5254,7 +5254,7 @@ functions-have-names@^1.2.2:
 
 fuzzyset.js@^1.0.7:
   version "1.0.7"
-  resolved "https://registry.yarnpkg.com/fuzzyset.js/-/fuzzyset.js-1.0.7.tgz#11e6aaa88b03fcfa1e36165dc2911f62494701b7"
+  resolved "https://registry.npmjs.org/fuzzyset.js/-/fuzzyset.js-1.0.7.tgz"
   integrity sha512-SmfOVSiPjbyC17m1i86wFq+jmkGioqlY/amT6RZzq4hPTGJFWFF2voUe88zrq/zDbehFnSJFtu6kqTUCw1caKQ==
 
 gensync@^1.0.0-beta.2:
@@ -6892,9 +6892,9 @@ morgan@^1.10.0:
     on-headers "~1.0.2"
 
 moviedb-promise@^3.1.18:
-  version "3.1.18"
-  resolved "https://registry.yarnpkg.com/moviedb-promise/-/moviedb-promise-3.1.18.tgz#91af3e341950ba54e10b1efd82bd558fadccd078"
-  integrity sha512-/KFtwNDBoLUo/6JWhKopA2WfvceL1lePZ5R04FO49xomx2R1tgtrK84RHCJqMORuh/qgSbtEC5c6TUKqxN1qGg==
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/moviedb-promise/-/moviedb-promise-3.3.1.tgz"
+  integrity sha512-l1J+5s5V5sTBZ7nJsiFCyScFVrV3UTQgxqT0gHJlUk49FAxWBPwIaMopGqRieYh3+3zjWSG2wWxCFZhSBTnnuQ==
   dependencies:
     axios "^0.26.1"
     lodash "^4.17.21"
@@ -7311,7 +7311,7 @@ path-type@^4.0.0:
 
 paths-js@^0.4.10:
   version "0.4.11"
-  resolved "https://registry.yarnpkg.com/paths-js/-/paths-js-0.4.11.tgz#b2a9d5f94ee9949aa8fee945f78a12abff44599e"
+  resolved "https://registry.npmjs.org/paths-js/-/paths-js-0.4.11.tgz"
   integrity sha512-3mqcLomDBXOo7Fo+UlaenG6f71bk1ZezPQy2JCmYHy2W2k5VKpP+Jbin9H0bjXynelTbglCqdFhSEkeIkKTYUA==
 
 performance-now@^2.1.0:
@@ -8065,7 +8065,7 @@ raw-body@2.5.1:
 
 react-activity-rings@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-activity-rings/-/react-activity-rings-1.1.0.tgz#61486237f3f01ee3f7cfc34cb7b1d3c3551a746e"
+  resolved "https://registry.npmjs.org/react-activity-rings/-/react-activity-rings-1.1.0.tgz"
   integrity sha512-NEgy4zcuAHAReDuR+qje920bsMMvWqv1X9+PpL4p69WYtAIGkiUVzNk0nouoQbs2Qf9VFwGHhUm7mee8X4WcYg==
   dependencies:
     paths-js "^0.4.10"
@@ -8121,14 +8121,14 @@ react-dev-utils@^12.0.0:
 
 react-device-detect@^2.2.2:
   version "2.2.2"
-  resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-2.2.2.tgz#dbabbce798ec359c83f574c3edb24cf1cca641a5"
+  resolved "https://registry.npmjs.org/react-device-detect/-/react-device-detect-2.2.2.tgz"
   integrity sha512-zSN1gIAztUekp5qUT/ybHwQ9fmOqVT1psxpSlTn1pe0CO+fnJHKRLOWWac5nKxOxvOpD/w84hk1I+EydrJp7SA==
   dependencies:
     ua-parser-js "^1.0.2"
 
 react-dom@18.2.0:
   version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
+  resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
   dependencies:
     loose-envify "^1.1.0"
@@ -8158,7 +8158,7 @@ react-focus-lock@^2.9.1:
 
 react-ga@^3.3.1:
   version "3.3.1"
-  resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-3.3.1.tgz#d8e1f4e05ec55ed6ff944dcb14b99011dfaf9504"
+  resolved "https://registry.npmjs.org/react-ga/-/react-ga-3.3.1.tgz"
   integrity sha512-4Vc0W5EvXAXUN/wWyxvsAKDLLgtJ3oLmhYYssx+YzphJpejtOst6cbIHCIyF50Fdxuf5DDKqRYny24yJ2y7GFQ==
 
 react-icons@^4.3.1:
@@ -8183,7 +8183,7 @@ react-is@^18.0.0:
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
-  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 react-query@^3.34.16:
@@ -8300,7 +8300,7 @@ react-style-singleton@^2.2.1:
 
 react-virtualized@^9.22.3:
   version "9.22.3"
-  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.22.3.tgz#f430f16beb0a42db420dbd4d340403c0de334421"
+  resolved "https://registry.npmjs.org/react-virtualized/-/react-virtualized-9.22.3.tgz"
   integrity sha512-MKovKMxWTcwPSxE1kK1HcheQTWfuCxAuBoSTf2gwyMM21NdX/PXUhnoP8Uc5dRKd+nKm8v41R36OellhdCpkrw==
   dependencies:
     "@babel/runtime" "^7.7.2"
@@ -8312,7 +8312,7 @@ react-virtualized@^9.22.3:
 
 react@18.2.0:
   version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+  resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
@@ -9372,9 +9372,9 @@ typescript@^4.4.2:
   integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
 ua-parser-js@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.2.tgz#e2976c34dbfb30b15d2c300b2a53eac87c57a775"
-  integrity sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==
+  version "1.0.33"
+  resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-1.0.33.tgz"
+  integrity sha512-RqshF7TPTE0XLYAqmjlu5cLLuGdKrNu9O1KLA/qp39QtbZwuzwv1dT46DZSopoUMsYgXpB3Cv8a03FI8b74oFQ==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
