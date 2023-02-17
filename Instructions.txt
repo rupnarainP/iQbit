@@ -1,0 +1,3 @@
+1. Use sudo yarn instead of sudo npm.
+2. Make sure @types/react is the same version for both dependencies and resolutions in package.json  
+    eg. "@types/react": "^18.0.15"

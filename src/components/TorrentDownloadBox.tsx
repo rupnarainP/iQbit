@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useMemo, useState} from "react";
+import React, {ChangeEvent, PropsWithChildren, useMemo, useState} from "react";
 import {
   Box,
   Button,
@@ -36,6 +36,7 @@ const TorrentDownloadBox = ({
     return Object.values(categories || {}).map((c) => ({
       label: c.name,
       value: c.name,
+      path: c.savePath
     }));
   }, [categories]);
 
@@ -58,6 +59,26 @@ const TorrentDownloadBox = ({
   const bgColor = useColorModeValue("grayAlpha.200", "grayAlpha.400");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [downloadPath, setDownloadPath] = useState("");
+
+  const handleChange = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+
+    for (let c of Categories) {
+      if (categoryName === 'Anime' && c.label === 'Anime') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Games' && c.label === 'Games') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Movies' && c.label === 'Movies') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Series' && c.label === 'Series') {
+        setDownloadPath(c.path);
+        break;
+      }
+    }
+  }
 
   return (
     <Flex
@@ -84,7 +105,7 @@ const TorrentDownloadBox = ({
                   <Select
                     placeholder="Select category"
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e) => handleChange(e.target.value)}
                   >
                     {Categories.map((c) => (
                       <option key={c.label}>{c.label}</option>

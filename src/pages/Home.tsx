@@ -18,7 +18,7 @@ import {
 import { IoDocumentAttach, IoPause, IoPlay } from "react-icons/io5";
 import { useMutation, useQuery } from "react-query";
 import { TorrClient } from "../utils/TorrClient";
-import { useMemo, useState } from "react";
+import {useMemo, useState} from "react";
 import TorrentBox from "../components/TorrentBox";
 import { TorrTorrentInfo } from "../types";
 import IosBottomSheet from "../components/ios/IosBottomSheet";
@@ -173,8 +173,29 @@ const Home = () => {
     return Object.values(categories || {}).map((c) => ({
       label: c.name,
       value: c.name,
+      path: c.savePath
     }));
   }, [categories]);
+
+  const handleChange = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+
+    for (let c of Categories) {
+      if (categoryName === 'Anime' && c.label === 'Anime') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Games' && c.label === 'Games') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Movies' && c.label === 'Movies') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Series' && c.label === 'Series') {
+        setDownloadPath(c.path);
+        break;
+      }
+    }
+  }
 
   const fontSizeContext = useFontSizeContext();
 
@@ -279,7 +300,7 @@ const Home = () => {
                   <Select
                     placeholder="Select category"
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e) => handleChange(e.target.value)}
                   >
                     {Categories.map((c) => (
                       <option key={c.label}>{c.label}</option>
