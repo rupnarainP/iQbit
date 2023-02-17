@@ -167,7 +167,7 @@ const Home = () => {
         filterStatus !== "Show All" ? torr.state === filterStatus : true
       )
       ?.filter(([hash, torr]) => torr.name.includes(filterSearch));
-  }, [torrentsTx, removedTorrs, filterCategory, filterStatus, filterSearch]);
+  }, [torrentsTx, removedTorrs, filterCategory, filterStatus, filterSearch, sortBy]);
 
   const Categories = useMemo(() => {
     return Object.values(categories || {}).map((c) => ({

@@ -25,7 +25,6 @@ import { TorrCategory, TorrTorrentInfo } from "../types";
 import stateDictionary from "../utils/StateDictionary";
 import filesize from "filesize";
 import {
-  IoAlarm,
   IoAlert,
   IoArrowDown,
   IoCalendar,

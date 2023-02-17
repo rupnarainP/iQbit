@@ -28,3 +28,4 @@ yarn-error.log*
 /release
 package-lock.json
 yarn.lock
+/release/*
