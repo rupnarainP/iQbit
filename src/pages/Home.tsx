@@ -182,7 +182,7 @@ const Home = () => {
 
     for (let c of Categories) {
       if (categoryName === 'Anime' && c.label === 'Anime') {
-        setDownloadPath(c.path);
+        setDownloadPath('');
         break;
       } else if (categoryName === 'Games' && c.label === 'Games') {
         setDownloadPath(c.path);
@@ -191,7 +191,7 @@ const Home = () => {
         setDownloadPath(c.path);
         break;
       } else if (categoryName === 'Series' && c.label === 'Series') {
-        setDownloadPath(c.path);
+        setDownloadPath('');
         break;
       }
     }
