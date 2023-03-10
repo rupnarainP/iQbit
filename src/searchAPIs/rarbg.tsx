@@ -115,6 +115,7 @@ const RarbgSearch = (props: SearchProviderComponentProps) => {
                 quality={parseFromString(torr.title, qualityAliases)}
                 type={parseFromString(torr.title, typeAliases)}
                 size={torr.size}
+                numberOfFiles=""
               />
             )}
             <SeedsAndPeers

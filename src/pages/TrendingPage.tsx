@@ -242,6 +242,7 @@ const TrendingPage = () => {
                                             quality={torrent.quality}
                                             type={torrent.type}
                                             size={torrent.size_bytes}
+                                            numberOfFiles=""
                                         />
                                         <SeedsAndPeers
                                             seeds={torrent.seeds.toString()}

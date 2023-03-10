@@ -174,6 +174,7 @@ const TPBSearch = (props: SearchProviderComponentProps) => {
                 quality={parseFromString(torr.name, qualityAliases)}
                 type={parseFromString(torr.name, typeAliases)}
                 size={parseInt(torr.size)}
+                numberOfFiles={torr.num_files}
               />
             )}
             <SeedsAndPeers seeds={torr.seeders} peers={torr.leechers} />
