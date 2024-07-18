@@ -101,6 +101,7 @@ const Home = () => {
   const addModalDisclosure = useDisclosure();
   const [textArea, setTextArea] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [downloadPath, setDownloadPath] = useState("");
 
   const [automaticManagment, setAutomaticManagment] = useState(false);
   const [sequentialDownload, setSequentialDownload] = useState(false);
@@ -191,8 +192,29 @@ const Home = () => {
     return Object.values(categories || {}).map((c) => ({
       label: c.name,
       value: c.name,
+      path: c.savePath
     }));
   }, [categories]);
+
+  const handleChange = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+
+    for (let c of Categories) {
+      if (categoryName === 'Anime' && c.label === 'Anime') {
+        setDownloadPath('');
+        break;
+      } else if (categoryName === 'Games' && c.label === 'Games') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Movies' && c.label === 'Movies') {
+        setDownloadPath(c.path);
+        break;
+      } else if (categoryName === 'Series' && c.label === 'Series') {
+        setDownloadPath('');
+        break;
+      }
+    }
+  }
 
   const fontSizeContext = useFontSizeContext();
 
@@ -332,7 +354,7 @@ const Home = () => {
                   <Select
                     placeholder="Select category"
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e) => handleChange(e.target.value)}
                   >
                     {Categories.map((c) => (
                       <option key={c.label}>{c.label}</option>
@@ -340,6 +362,13 @@ const Home = () => {
                   </Select>
                 </FormControl>
               )}
+
+          <FormLabel>{"Download Path"}</FormLabel>
+          <Input
+              _disabled={{ bgColor: "gray.50" }}
+              value={downloadPath}
+              onChange={(e) => setDownloadPath(e.target.value)}
+          />
             </VStack>
             <LightMode>
               <Button
