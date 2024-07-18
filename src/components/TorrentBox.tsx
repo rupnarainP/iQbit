@@ -84,12 +84,26 @@ const TorrentBox = ({
   const timeString = torrentData.eta ? CreateETAString(date) : "";
 
   const [waiting, setWaiting] = useState<
-    "" | "mainBtn" | "category" | "name" | "priority"
+    | ""
+    | "mainBtn"
+    | "category"
+    | "name"
+    | "priority"
+    | "sequential"
+    | "firstLastPriority"
+    | "autoManagement"
   >();
 
   useEffect(() => {
     setWaiting("");
-  }, [torrentData.state, torrentData.category, torrentData.name]);
+  }, [
+    torrentData.state,
+    torrentData.category,
+    torrentData.name,
+    torrentData.seq_dl,
+    torrentData.f_l_piece_prio,
+    torrentData.auto_tmm,
+  ]);
 
   const { mutate: pause } = useMutation(
     "pauseTorrent",
@@ -158,6 +172,37 @@ const TorrentBox = ({
       onMutate: () => setWaiting(""),
       onError: () => setWaiting(""),
       onSuccess: () => actionSheetDisclosure.onClose(),
+    }
+  );
+  const { mutate: toggleSequentialDownload } = useMutation(
+    "sequential-download",
+    () => TorrClient.toggleSequentialDownload(hash),
+    {
+      onMutate: () => setWaiting("sequential"),
+      onError: () => setWaiting(""),
+    }
+  );
+
+  const { mutate: toggleFirstLastPiecePrio } = useMutation(
+    "first-last-priority",
+    () => TorrClient.toggleFirstLastPiecePrio(hash),
+    {
+      onMutate: () => setWaiting("firstLastPriority"),
+      onError: () => setWaiting(""),
+    }
+  );
+
+  const { mutate: toggleAutoManagement } = useMutation(
+    "first-last-priority",
+    async () => {
+      return TorrClient.setAutoManagement(
+        hash,
+        (!torrentData.auto_tmm).toString()
+      );
+    },
+    {
+      onMutate: () => setWaiting("autoManagement"),
+      onError: () => setWaiting(""),
     }
   );
 
@@ -369,6 +414,21 @@ const TorrentBox = ({
                 {
                   label: "Change Category",
                   onClick: () => categoryChangeDisclosure.onOpen(),
+                },
+                {
+                  label: `Sequential Download`,
+                  onClick: toggleSequentialDownload,
+                  checked: torrentData.seq_dl,
+                },
+                {
+                  label: "First and Last piece first",
+                  onClick: toggleFirstLastPiecePrio,
+                  checked: torrentData.f_l_piece_prio,
+                },
+                {
+                  label: "Automatic management",
+                  onClick: toggleAutoManagement,
+                  checked: torrentData.auto_tmm,
                 },
                 {
                   label: "Rename Torrent",

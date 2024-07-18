@@ -13,24 +13,36 @@ import {
   Textarea,
   useColorModeValue,
   useDisclosure,
+  Switch,
   VStack,
 } from "@chakra-ui/react";
 import { IoDocumentAttach, IoPause, IoPlay } from "react-icons/io5";
 import { useMutation, useQuery } from "react-query";
 import { TorrClient } from "../utils/TorrClient";
-import {useMemo, useState} from "react";
+import { useMemo, useState } from "react";
 import TorrentBox from "../components/TorrentBox";
 import { TorrTorrentInfo } from "../types";
 import IosBottomSheet from "../components/ios/IosBottomSheet";
 import { Input } from "@chakra-ui/input";
 import { useIsLargeScreen } from "../utils/screenSize";
 import { randomTorrent } from "../data";
-import { List, WindowScroller } from "react-virtualized";
 import "react-virtualized/styles.css";
 import { FilterHeading } from "../components/Filters";
 import stateDictionary from "../utils/StateDictionary";
 import { useLocalStorage } from "usehooks-ts";
 import { useFontSizeContext } from "../components/FontSizeProvider"; // only needs to be imported once
+
+import { FC } from "react";
+import {
+  List as _List,
+  ListProps,
+  WindowScroller as _WindowScroller,
+  WindowScrollerProps,
+} from "react-virtualized";
+
+export const VirtualizedList = _List as unknown as FC<ListProps> & _List;
+export const VirtualizedWindowScroll =
+  _WindowScroller as unknown as FC<WindowScrollerProps> & _WindowScroller;
 
 const Home = () => {
   const { mutate: resumeAll } = useMutation("resumeAll", TorrClient.resumeAll);
@@ -89,10 +101,20 @@ const Home = () => {
   const addModalDisclosure = useDisclosure();
   const [textArea, setTextArea] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [downloadPath, setDownloadPath] = useState("");
+
+  const [automaticManagment, setAutomaticManagment] = useState(false);
+  const [sequentialDownload, setSequentialDownload] = useState(false);
+  const [firstAndLastPiece, setFirstAndLastPiece] = useState(false);
+
   const [fileError, setFileError] = useState("");
   const [file, setFile] = useState<File>();
   const [draggingOver, setDraggingOver] = useState(false);
+
+  const { data: settings } = useQuery(
+    "settings-mainpage",
+    TorrClient.getSettings,
+    { refetchInterval: 30000 }
+  );
 
   const validateAndSelectFile = (file: File) => {
     if (file.name.endsWith(".torrent")) {
@@ -107,12 +129,10 @@ const Home = () => {
   const { mutate: attemptAddTorrent, isLoading: attemptAddLoading } =
     useMutation(
       "addTorrent",
-      () =>
+      (opts: { autoTmm?: boolean }) =>
         TorrClient.addTorrent(
           !!textArea ? "urls" : "torrents",
-          !!textArea ? textArea : file!,
-          selectedCategory,
-            downloadPath
+          !!textArea ? textArea : file!
         ),
       { onSuccess: addModalDisclosure.onClose }
     );
@@ -123,10 +143,6 @@ const Home = () => {
   const [filterSearch, setFilterSearch] = useLocalStorage(
     "home-filter-search",
     ""
-  );
-  const [sortBy, setSortBy] = useLocalStorage(
-    "home-sort",
-    "Name Asc"
   );
   const [filterCategory, setFilterCategory] = useLocalStorage(
     "home-filter-category",
@@ -155,10 +171,12 @@ const Home = () => {
   }, [filterCategory, filterSearch, filterStatus]);
 
   const Torrents = useMemo(() => {
+    if (torrentsTx === undefined) {
+      return [];
+    }
+
     return Object.entries(torrentsTx)
-      // ?.sort((a, b) => b[1]?.added_on - a[1]?.added_on)
-      ?.sort((a, b) => 
-      sortBy === "Name Asc" ? (b[1]?.name > a[1]?.name ? -1 : 1) : (b[1]?.added_on - a[1]?.added_on)) 
+      ?.sort((a, b) => b[1]?.added_on - a[1]?.added_on)
       ?.filter(([hash]) => !removedTorrs.includes(hash))
       ?.filter(([hash, torr]) =>
         filterCategory !== "Show All" ? torr.category === filterCategory : true
@@ -167,41 +185,19 @@ const Home = () => {
         filterStatus !== "Show All" ? torr.state === filterStatus : true
       )
       ?.filter(([hash, torr]) => torr.name.includes(filterSearch));
-  }, [torrentsTx, removedTorrs, filterCategory, filterStatus, filterSearch, sortBy]);
+  }, [torrentsTx, removedTorrs, filterCategory, filterStatus, filterSearch]);
 
   const Categories = useMemo(() => {
     return Object.values(categories || {}).map((c) => ({
       label: c.name,
       value: c.name,
-      path: c.savePath
     }));
   }, [categories]);
 
-  const handleChange = (categoryName: string) => {
-    setSelectedCategory(categoryName);
-
-    for (let c of Categories) {
-      if (categoryName === 'Anime' && c.label === 'Anime') {
-        setDownloadPath('');
-        break;
-      } else if (categoryName === 'Games' && c.label === 'Games') {
-        setDownloadPath(c.path);
-        break;
-      } else if (categoryName === 'Movies' && c.label === 'Movies') {
-        setDownloadPath(c.path);
-        break;
-      } else if (categoryName === 'Series' && c.label === 'Series') {
-        setDownloadPath('');
-        break;
-      }
-    }
-  }
-
   const fontSizeContext = useFontSizeContext();
 
-  // @ts-ignore
   return (
-    <WindowScroller>
+    <VirtualizedWindowScroll>
       {({ isScrolling, scrollTop, width, height }) => (
         <Flex flexDirection={"column"} width={"100%"} mt={isLarge ? 24 : 0}>
           <PageHeader
@@ -294,13 +290,49 @@ const Home = () => {
                 </Flex>
                 <FormErrorMessage>{fileError}</FormErrorMessage>
               </FormControl>
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="automaticManagment" mb="0">
+                  Automatic Managment
+                </FormLabel>
+                <Switch
+                  id="automaticManagment"
+                  isChecked={automaticManagment}
+                  onChange={(e) => {
+                    setAutomaticManagment(e.target.checked);
+                  }}
+                />
+              </FormControl>
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="sequentialDownload" mb="0">
+                  Sequential Download
+                </FormLabel>
+                <Switch
+                  id="sequentialDownload"
+                  isChecked={sequentialDownload}
+                  onChange={(e) => {
+                    setSequentialDownload(e.target.checked);
+                  }}
+                />
+              </FormControl>
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="firstAndLastPiece" mb="0">
+                  Download first and last piece first
+                </FormLabel>
+                <Switch
+                  id="firstAndLastPiece"
+                  isChecked={firstAndLastPiece}
+                  onChange={(e) => {
+                    setFirstAndLastPiece(e.target.checked);
+                  }}
+                />
+              </FormControl>
               {Categories.length && (
                 <FormControl>
                   <FormLabel>{"Category"}</FormLabel>
                   <Select
                     placeholder="Select category"
                     value={selectedCategory}
-                    onChange={(e) => handleChange(e.target.value)}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
                   >
                     {Categories.map((c) => (
                       <option key={c.label}>{c.label}</option>
@@ -308,15 +340,6 @@ const Home = () => {
                   </Select>
                 </FormControl>
               )}
-              {<FormControl>
-                <FormLabel>{"Download Path"}</FormLabel>
-                <Input
-                    _disabled={{ bgColor: "gray.50" }}
-                    value={downloadPath}
-                    onChange={(e) => setDownloadPath(e.target.value)}
-                />
-              </FormControl>
-              }
             </VStack>
             <LightMode>
               <Button
@@ -326,7 +349,9 @@ const Home = () => {
                 size={"lg"}
                 colorScheme={"blue"}
                 mt={16}
-                onClick={() => attemptAddTorrent()}
+                onClick={() =>
+                  attemptAddTorrent({ autoTmm: settings?.auto_tmm_enabled })
+                }
               >
                 {"Add Torrent"}
               </Button>
@@ -365,16 +390,6 @@ const Home = () => {
                     value={filterSearch}
                     onChange={(e) => setFilterSearch(e.target.value)}
                   />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Sort</FormLabel>
-                  <Select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                  >
-                    <option>Name Asc</option>
-                    <option>Date Added Desc</option>
-                  </Select>
                 </FormControl>
                 <FormControl>
                   <FormLabel>Category</FormLabel>
@@ -429,7 +444,7 @@ const Home = () => {
               </Flex>
             )}
 
-            <List
+            <VirtualizedList
               autoWidth
               rowCount={Torrents.length}
               rowHeight={(230 * fontSizeContext.scale) / 100}
@@ -475,7 +490,7 @@ const Home = () => {
           </Flex>
         </Flex>
       )}
-    </WindowScroller>
+    </VirtualizedWindowScroll>
   );
 };
 
