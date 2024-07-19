@@ -147,6 +147,10 @@ const Home = () => {
     "home-filter-search",
     ""
   );
+  const [sortBy, setSortBy] = useLocalStorage(
+    "home-sort",
+    "Name Asc"
+  );
   const [filterCategory, setFilterCategory] = useLocalStorage(
     "home-filter-category",
     "Show All"
@@ -179,7 +183,9 @@ const Home = () => {
     }
 
     return Object.entries(torrentsTx)
-      ?.sort((a, b) => b[1]?.added_on - a[1]?.added_on)
+      // ?.sort((a, b) => b[1]?.added_on - a[1]?.added_on)
+      ?.sort((a, b) => 
+        sortBy === "Name Asc" ? (b[1]?.name > a[1]?.name ? -1 : 1) : (b[1]?.added_on - a[1]?.added_on)) 
       ?.filter(([hash]) => !removedTorrs.includes(hash))
       ?.filter(([hash, torr]) =>
         filterCategory !== "Show All" ? torr.category === filterCategory : true
@@ -188,7 +194,7 @@ const Home = () => {
         filterStatus !== "Show All" ? torr.state === filterStatus : true
       )
       ?.filter(([hash, torr]) => torr.name.includes(filterSearch));
-  }, [torrentsTx, removedTorrs, filterCategory, filterStatus, filterSearch]);
+  }, [torrentsTx, removedTorrs, filterCategory, filterStatus, filterSearch, sortBy]);
 
   const Categories = useMemo(() => {
     return Object.values(categories || {}).map((c) => ({
@@ -421,6 +427,16 @@ const Home = () => {
                     value={filterSearch}
                     onChange={(e) => setFilterSearch(e.target.value)}
                   />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Sort</FormLabel>
+                  <Select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                  >
+                    <option>Name Asc</option>
+                    <option>Date Added Desc</option>
+                  </Select>
                 </FormControl>
                 <FormControl>
                   <FormLabel>Category</FormLabel>
