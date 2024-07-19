@@ -133,7 +133,9 @@ const Home = () => {
       (opts: { autoTmm?: boolean }) =>
         TorrClient.addTorrent(
           !!textArea ? "urls" : "torrents",
-          !!textArea ? textArea : file!
+          !!textArea ? textArea : file!, 
+          selectedCategory, 
+          downloadPath
         ),
       { onSuccess: addModalDisclosure.onClose }
     );
